@@ -1,0 +1,18 @@
+1. Install SQL Server Express (any version)
+- https://go.microsoft.com/fwlink/p/?linkid=2216019&clcid=0x409&culture=en-us&country=us
+- instalation: install as a named instance of name "SQLEXPRESS" to be able to use the server URL "./SQLEXPRESS" in connection string for the local SQL Server Express instance
+  - if the SQL Server Express instance is named differently, server URL in the connection string has to be modified appropriately
+
+2. Install SQL Server Management Studio
+- https://aka.ms/ssmsfullsetup
+
+3. Connect to the local SQL Server Express instance in SSMS
+- server URL: ./SQLEXPRESS (where . represents "this computer" and SQLEXPRESS is the name of the SQL Server Express named instance (default = SQLEXPRESS)
+- authentication: Windows/Integrated Authentication (no username and password)
+
+4. Attach the .mdf file (database file)
+- if .ldf file is not stored in the same directory as the .mdf file, it will be created for SQL Server working purposes
+- if .ldf file is found in the same directory, it will be used by SQL Server
+
+You should have now your database added to the running SQL Server Express instance on your computer.
+

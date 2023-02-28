@@ -1,0 +1,18 @@
+Denní záznam burzy
+
+Datum
+Company name
+Zkratka (ticker)
+Shares (počet)
+Procenta ("weight")
+
+- porovnáváme pouze číslo Shares a to oproti zvolenému předchozímu dni
+
+- záznamy z nějakého dne získáme WHERE Datum = hodnota
+
+Diff - výstup:
+- potřebujeme udělat porovnání dvou dní
+- uděláme to takto:
+  - načteme záznamy za 1. a 2. den
+  - v paměti uděláme diff
+  -> spočítá se position info -> Company Name, Ticker, Shares Diff Percent(nullable), Weight Percent
