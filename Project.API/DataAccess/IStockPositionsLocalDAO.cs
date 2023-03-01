@@ -6,9 +6,9 @@ using Project.API.Models;
 namespace Project.API.DataAccess
 {
     /// <summary>
-    /// Uses persistent data source where records for various dates are stored to be able to calculate diffs from them
+    /// Manages local persistent data source where records for various dates are stored to be able to calculate diffs from them
     /// </summary>
-    public interface IStockPositionsDAO
+    public interface IStockPositionsLocalDAO
     {
         IList<StockPositionRecord> GetAll();
 

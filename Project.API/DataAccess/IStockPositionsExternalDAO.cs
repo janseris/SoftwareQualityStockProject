@@ -7,12 +7,12 @@ namespace Project.API.DataAccess
     /// <summary>
     /// Obtains data from external data source
     /// </summary>
-    public interface IStockPositionExternalDAO
+    public interface IStockPositionsExternalDAO
     {
         /// <summary>
         /// Returns records for the current day.
         /// </summary>
         /// <returns></returns>
-        IList<StockPositionRecord> GetAll();
+        IList<StockPositionRecord> GetTodaysRecords();
     }
 }

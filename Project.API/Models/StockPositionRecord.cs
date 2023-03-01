@@ -8,7 +8,7 @@ namespace Project.API.Models
     public class StockPositionRecord
     {
         /// <summary>
-        /// Only years, months and days are used.
+        /// Only years, months and days are important and will be used.
         /// </summary>
         public DateTime Date { get; set; }
 
@@ -33,7 +33,7 @@ namespace Project.API.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="date">only date part is preserved (time part is stripped)</param>
+        /// <param name="date">info other than day, month, year is not relevant</param>
         /// <param name="companyName">any non-null string</param>
         /// <param name="ticker">not null and not empty or whitespace</param>
         /// <param name="shares">non-negative</param>
@@ -45,7 +45,7 @@ namespace Project.API.Models
             {
                 throw new ArgumentException($"{nameof(shares)} cannot be negative.");
             }
-            if(companyName is null)
+            if (companyName is null)
             {
                 throw new ArgumentException($"{nameof(companyName)} cannot be null.");
             }
