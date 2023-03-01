@@ -16,9 +16,11 @@ namespace Project.Sample
 
             bool todaySaved = await facade.AreTodaysStockPositionsAlreadySaved();
 
-            Console.WriteLine("Todays data aren't already saved in the DB.");
+            var verb = todaySaved ? "are" : "aren't";
+            Console.WriteLine($"Todays data {verb} already saved in the DB.");
 
-            Console.WriteLine("Retrieving and saving today's data.");
+            var conditionalOverwriteText = todaySaved ? " (overwriting)" : "";
+            Console.WriteLine($"Retrieving and saving today's data{conditionalOverwriteText}.");
             await facade.SaveTodaysStockPositions(overwrite: true);
 
             Console.WriteLine("Todays data aren't already saved in DB.");

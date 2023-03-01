@@ -10,7 +10,7 @@ namespace Project.DataAccess.External.CSV
 {
     public class StockPositionsCSVParser : IStockPositionsCSVParser
     {
-        private readonly ILogger<StockPositionsCSVParser> logger;
+        private readonly ILogger logger;
 
         public StockPositionsCSVParser(ILogger<StockPositionsCSVParser> logger)
         {
