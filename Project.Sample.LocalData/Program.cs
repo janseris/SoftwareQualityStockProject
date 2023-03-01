@@ -14,19 +14,31 @@ namespace Project.Sample.LocalData
             var provider = DISetup.GetServiceProvider();
             var service = provider.GetRequiredService<ITodaysStockPositionsLoadingService>() as TodaysStockPositionsLoadingService;
 
-            var date = new DateTime(2023, 2, 28);
-            var csvFilePath = "../../../../sampleData/28feb2023 - ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv";
-            var imported = await ImportDataToDB(provider, date, csvFilePath, overWriteIfExists: true);
+            string sampleDataFolderPath = "../../../../sampleData";
+
+            await ImportDataToDB(provider, new DateTime(2023, 2, 28), "28feb2023 - ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv", sampleDataFolderPath);
+            Console.WriteLine();
+            await ImportDataToDB(provider, new DateTime(2023, 3, 1), "1mar2023 - ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv", sampleDataFolderPath);
+            Console.WriteLine();
+
+            Console.ReadKey(); //do not exit immediately
+        }
+
+        private static async Task<bool> ImportDataToDB(IServiceProvider provider, DateTime date, string csvFileName, string sampleDataFolderPath, bool overwriteIfExists = false)
+        {
+            var csvFilePath = Path.Combine(sampleDataFolderPath, csvFileName);
+            var imported = await ImportDataToDBInternal(provider, date, csvFilePath, overwriteIfExists);
             if (imported)
             {
-                Console.WriteLine("Data imported.");
+                Console.WriteLine($"Data for {date.ToString("d. MMM. yyyy")} imported.");
             }
+            return imported;
         }
 
         /// <summary>
         /// Code taken from <see cref="StockPositionsAdministrationFacade.SaveTodaysStockPositions"/>
         /// </summary>
-        private static async Task<bool> ImportDataToDB(IServiceProvider provider, DateTime date, string csvFilePath, bool overWriteIfExists = false)
+        private static async Task<bool> ImportDataToDBInternal(IServiceProvider provider, DateTime date, string csvFilePath, bool overwriteIfExists = false)
         {
             var service = provider.GetRequiredService<ITodaysStockPositionsLoadingService>() as TodaysStockPositionsLoadingService;
 
@@ -39,7 +51,7 @@ namespace Project.Sample.LocalData
             //the code from StockPositionsAdministrationFacade#SaveTodaysStockPositions
             var existsForTheDate = await localDAO.AnyRecordsExist(date);
 
-            if (existsForTheDate && overWriteIfExists)
+            if (existsForTheDate && overwriteIfExists)
             {
                 //TODO: transaction
                 await localDAO.DeleteForDate(date);
