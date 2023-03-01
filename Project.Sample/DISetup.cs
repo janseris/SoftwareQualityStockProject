@@ -49,6 +49,7 @@ namespace Project.Sample
 
             services.AddSingleton<IStockPositionsCSVParser, StockPositionsCSVParser>();
             services.AddSingleton<IStockPositionsLocalDAO, StockPositionsLocalDAO>();
+            services.AddSingleton<StockPositionInsertDBMapper>();
             services.AddSingleton<ITodaysStockPositionsLoadingService, TodaysStockPositionsLoadingService>();
             services.AddSingleton<IStockPositionsAdministrationFacade, StockPositionsAdministrationFacade>();
 

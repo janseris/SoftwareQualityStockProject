@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.UI.Console", "Project.UI.Console\Project.UI.Console.csproj", "{5D722EB9-4E5F-4F10-B087-14000D4D4303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Sample", "Project.Sample\Project.Sample.csproj", "{5D722EB9-4E5F-4F10-B087-14000D4D4303}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.API", "Project.API\Project.API.csproj", "{239D6ABD-A8AF-4023-9F38-1F9EA7C7A24A}"
 EndProject

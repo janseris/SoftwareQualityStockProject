@@ -27,7 +27,7 @@ namespace Project.Logic.Services
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public async Task<IList<StockPositionRecord>> GetTodaysRecordsFromCSVFile(byte[] file)
+        public IList<StockPositionRecord> GetTodaysRecordsFromCSVFile(byte[] file)
         {
             return csvParser.Parse(file);
         }
