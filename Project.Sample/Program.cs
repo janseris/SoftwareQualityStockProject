@@ -23,8 +23,6 @@ namespace Project.Sample
             Console.WriteLine($"Retrieving and saving today's data{conditionalOverwriteText}.");
             await facade.SaveTodaysStockPositions(overwrite: true);
 
-            Console.WriteLine("Todays data aren't already saved in DB.");
-
             var availableDates = await facade.GetAvailableDates();
             Console.WriteLine("Available dates:");
             foreach (var date in availableDates)

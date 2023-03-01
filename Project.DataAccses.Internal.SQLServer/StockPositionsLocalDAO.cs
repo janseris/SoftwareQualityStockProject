@@ -21,8 +21,11 @@ namespace Project.DataAccess.Local.SQLServer
 
         public async Task<bool> AnyRecordsExist(DateTime date)
         {
+            var dateOnly = DateTimeHelper.KeepOnlyYearMonthDay(date);
+
             using var db = DB;
-            return await db.STOCK_POSITION.AnyAsync(); //SELECT
+            var query = from item in db.STOCK_POSITION where item.Date == date select 1;
+            return await query.AnyAsync(); //SELECT
         }
 
         private IQueryable<StockPositionRecord> CreateGetQuery(SWQualityProjectContext db)
