@@ -5,6 +5,6 @@
         /// <summary>
         /// Loads records data in CSV format
         /// </summary>
-        Task<byte[]> GetCSV();
+        Task<byte[]> GetTodayRecordsCSV();
     }
 }

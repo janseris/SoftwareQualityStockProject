@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Project.API.Models;
 
-namespace Project.API.DataAccess
+namespace Project.API.Services
 {
     /// <summary>
     /// Obtains data from external data source
     /// </summary>
-    public interface IStockPositionsExternalDAO
+    public interface ITodaysStockPositionsLoadingService
     {
         /// <summary>
         /// Returns records for the current day.
         /// </summary>
         /// <returns></returns>
-        IList<StockPositionRecord> GetTodaysRecords();
+        Task<IList<StockPositionRecord>> GetTodaysRecords();
     }
 }

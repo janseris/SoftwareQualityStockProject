@@ -15,11 +15,12 @@ namespace Project.UI.Console
         public IServiceProvider GetServiceProvider()
         {
             //https://rogerpence.dev/add-appsettings-json-file-to-a-c-console-app/
-            //appsettings.json properties must be Copy Always
+            //appsettings.json was added menually to the project because it is not an ASP.NET application and in Properties, it must have "Copy Always"
 
-            //https://stackoverflow.com/questions/58530942/how-to-read-configuration-settings-before-initializing-a-host-in-asp-net-core
+            //load appsettings.json, source: https://stackoverflow.com/questions/58530942/how-to-read-configuration-settings-before-initializing-a-host-in-asp-net-core
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
+            //read from appsettings.json
             var connectionString = configuration.GetConnectionString("Local");
             string csvURL = configuration.GetSection("CSVHttpClientConfig")["URL"];
 

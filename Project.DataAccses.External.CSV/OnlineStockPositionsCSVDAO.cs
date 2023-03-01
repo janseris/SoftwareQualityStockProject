@@ -22,7 +22,7 @@ namespace Project.DataAccses.External.CSV
             this.httpClient = httpClient;
         }
 
-        public async Task<byte[]> GetCSV()
+        public async Task<byte[]> GetTodayRecordsCSV()
         {
             return await GetCSV(httpClient.BaseAddress! /* "!" = assert not null */);
         }
