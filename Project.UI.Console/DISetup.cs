@@ -3,16 +3,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Project.API.DataAccess;
+using Project.API.Facades;
+using Project.API.Services;
+using Project.DataAccess.External.CSV;
+using Project.DataAccess.External.CSV.Interfaces;
 using Project.DataAccess.Local.SQLServer;
 using Project.DataAccess.Local.SQLServer.Models;
-using Project.DataAccses.External.CSV;
-using Project.DataAccses.External.CSV.Interfaces;
+using Project.Logic.Facades;
+using Project.Logic.Services;
 
-namespace Project.UI.Console
+namespace Project.Sample
 {
     public class DISetup
     {
-        public IServiceProvider GetServiceProvider()
+        public static IServiceProvider GetServiceProvider()
         {
             //https://rogerpence.dev/add-appsettings-json-file-to-a-c-console-app/
             //appsettings.json was added menually to the project because it is not an ASP.NET application and in Properties, it must have "Copy Always"
@@ -45,10 +49,11 @@ namespace Project.UI.Console
 
             services.AddSingleton<IStockPositionsCSVParser, StockPositionsCSVParser>();
             services.AddSingleton<IStockPositionsLocalDAO, StockPositionsLocalDAO>();
+            services.AddSingleton<ITodaysStockPositionsLoadingService, TodaysStockPositionsLoadingService>();
+            services.AddSingleton<IStockPositionsAdministrationFacade, StockPositionsAdministrationFacade>();
 
-
-
-
+            services.AddSingleton<IStockPositionDiffService, StockPositionDiffService>();
+            services.AddSingleton<IStockPositionsDiffFacade, StockPositionsDiffFacade>();
 
             return services.BuildServiceProvider();
         }

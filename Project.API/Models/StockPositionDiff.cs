@@ -20,5 +20,19 @@
         public int Shares { get; set; }
 
         public double WeightPercent { get; set; }
+
+        public override string ToString()
+        {
+            return $"{CompanyName} ({Ticker}), shares: {Shares.ToString("#,##0")} {PrintSharesDiffPercent()}, weight: {WeightPercent.ToString("N2")} %";
+        }
+
+        private string PrintSharesDiffPercent()
+        {
+            if(SharesDiffPercent == null)
+            {
+                return string.Empty;
+            }
+            return $"({SharesDiffPercent.Value.ToString("+N2;-N2;0")} %)";
+        }
     }
 }

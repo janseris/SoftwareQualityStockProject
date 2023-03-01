@@ -1,6 +1,6 @@
 ﻿using Project.API.Models;
 
-namespace Project.DataAccses.External.CSV.Interfaces
+namespace Project.DataAccess.External.CSV.Interfaces
 {
     public interface IStockPositionsCSVParser
     {

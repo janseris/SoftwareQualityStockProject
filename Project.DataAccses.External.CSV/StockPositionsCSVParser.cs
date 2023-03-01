@@ -3,9 +3,9 @@
 using Microsoft.VisualBasic.FileIO;
 
 using Project.API.Models;
-using Project.DataAccses.External.CSV.Interfaces;
+using Project.DataAccess.External.CSV.Interfaces;
 
-namespace Project.DataAccses.External.CSV
+namespace Project.DataAccess.External.CSV
 {
     public class StockPositionsCSVParser : IStockPositionsCSVParser
     {
@@ -61,7 +61,7 @@ namespace Project.DataAccses.External.CSV
         private StockPositionRecord Parse(string line)
         {
             var fields = GetFieldsSafe(line);
-            if(fields.Count != FieldsCount)
+            if (fields.Count != FieldsCount)
             {
                 throw new ArgumentException($"Incorrect number of fields when parsing {line} to delimited fields. Expected count: {FieldsCount}");
             }

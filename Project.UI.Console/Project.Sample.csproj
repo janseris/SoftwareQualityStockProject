@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Project.DataAccses.External.CSV\Project.DataAccess.External.CSV.csproj" />
     <ProjectReference Include="..\Project.DataAccses.Internal.SQLServer\Project.DataAccess.Local.SQLServer.csproj" />
+    <ProjectReference Include="..\Project.Services\Project.Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

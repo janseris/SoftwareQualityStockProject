@@ -74,5 +74,17 @@ namespace Project.DataAccess.Local.SQLServer
             db.AddRange(items);
             await db.SaveChangesAsync(); //INSERT
         }
+
+        public async Task DeleteForDate(DateTime date)
+        {
+            using var db = DB;
+
+            //EF Core 7 bulk delete could be used without roundtrip maybe
+
+            var query = from item in db.STOCK_POSITION where item.Date == date select item;
+            var items = await query.ToListAsync(); //SELECT
+            db.RemoveRange(items);
+            await db.SaveChangesAsync(); //DELETE
+        }
     }
 }

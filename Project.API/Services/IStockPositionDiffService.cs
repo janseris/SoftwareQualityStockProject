@@ -26,6 +26,6 @@ namespace Project.API.Services
         /// <param name="info1"></param>
         /// <param name="info2"></param>
         /// <returns></returns>
-        List<StockPositionDiff> GetDiff(IList<StockPositionRecord> info1, IList<StockPositionRecord> info2);
+        IList<StockPositionDiff> GetDiff(IList<StockPositionRecord> info1, IList<StockPositionRecord> info2);
     }
 }

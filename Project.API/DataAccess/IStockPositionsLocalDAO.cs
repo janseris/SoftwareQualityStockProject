@@ -34,5 +34,11 @@ namespace Project.API.DataAccess
         /// </summary>
         /// <param name="records"></param>
         Task InsertAll(IList<StockPositionRecord> records);
+
+        /// <summary>
+        /// Removes records for date <paramref name="date"/>. 
+        /// <br>This is for overwriting with fresh data scenario.</br>
+        /// </summary>
+        Task DeleteForDate(DateTime date);
     }
 }

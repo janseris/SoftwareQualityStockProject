@@ -1,8 +1,8 @@
-﻿using Project.API.DataAccess;
-using Project.API.Models;
-using Project.DataAccses.External.CSV.Interfaces;
+﻿using Project.API.Models;
+using Project.API.Services;
+using Project.DataAccess.External.CSV.Interfaces;
 
-namespace Project.Services
+namespace Project.Logic.Services
 {
     public class TodaysStockPositionsLoadingService : ITodaysStockPositionsLoadingService
     {
@@ -20,6 +20,16 @@ namespace Project.Services
             var csv = await csvDAO.GetTodayRecordsCSV();
             var items = csvParser.Parse(csv);
             return items;
+        }
+
+        /// <summary>
+        /// For testing purposes
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public async Task<IList<StockPositionRecord>> GetTodaysRecordsFromCSVFile(byte[] file)
+        {
+            return csvParser.Parse(file);
         }
     }
 }

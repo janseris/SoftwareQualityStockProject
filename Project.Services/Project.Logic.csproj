@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Project.API\Project.API.csproj" />
+    <ProjectReference Include="..\Project.DataAccses.External.CSV\Project.DataAccess.External.CSV.csproj" />
+  </ItemGroup>
+
 </Project>

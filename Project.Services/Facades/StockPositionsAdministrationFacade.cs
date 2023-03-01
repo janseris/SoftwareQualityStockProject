@@ -1,15 +1,16 @@
 ﻿using Project.API.DataAccess;
+using Project.API.Facades;
 using Project.API.Models;
 using Project.API.Services;
 
-namespace Project.Services
+namespace Project.Logic.Facades
 {
-    public class StockPositionsAdministrationService : IStockPositionsAdministrationFacade
+    public class StockPositionsAdministrationFacade : IStockPositionsAdministrationFacade
     {
         private readonly IStockPositionsLocalDAO localDAO;
         private readonly ITodaysStockPositionsLoadingService sourceDAO;
 
-        public StockPositionsAdministrationService(IStockPositionsLocalDAO localDAO, ITodaysStockPositionsLoadingService sourceDAO)
+        public StockPositionsAdministrationFacade(IStockPositionsLocalDAO localDAO, ITodaysStockPositionsLoadingService sourceDAO)
         {
             this.localDAO = localDAO;
             this.sourceDAO = sourceDAO;
@@ -35,13 +36,19 @@ namespace Project.Services
             var data = await sourceDAO.GetTodaysRecords();
             var existsForToday = await localDAO.AnyRecordsExist(DateTime.Now);
 
-            bool insertNotNeeded = existsForToday && !overwrite;
-            if (insertNotNeeded)
+            if(existsForToday && overwrite)
             {
-                return false;
+                //TODO: transaction
+                await localDAO.DeleteForDate(DateTime.Now);
+                await localDAO.InsertAll(data);
+                return true;
             }
-            await localDAO.InsertAll(data);
-            return true;
+            if (existsForToday == false)
+            {
+                await localDAO.InsertAll(data);
+                return true;
+            }
+            return false;
         }
     }
 }

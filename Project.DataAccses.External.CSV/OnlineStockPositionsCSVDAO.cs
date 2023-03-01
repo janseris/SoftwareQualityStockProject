@@ -1,6 +1,6 @@
-﻿using Project.DataAccses.External.CSV.Interfaces;
+﻿using Project.DataAccess.External.CSV.Interfaces;
 
-namespace Project.DataAccses.External.CSV
+namespace Project.DataAccess.External.CSV
 {
     /// <summary>
     /// Retrieves CSV with stock positions from an online source
@@ -15,7 +15,7 @@ namespace Project.DataAccses.External.CSV
         /// <param name="httpClient">with base address (URL) pointing to the requested resource</param>
         public OnlineStockPositionsCSVDAO(HttpClient httpClient)
         {
-            if(httpClient.BaseAddress is null)
+            if (httpClient.BaseAddress is null)
             {
                 throw new ArgumentException($"{nameof(httpClient.BaseAddress)} must be set");
             }
