@@ -13,7 +13,7 @@ namespace Project.API.DataAccess
     {
         Task<IList<StockPositionRecord>> GetAll();
 
-        Task<IList<StockPositionRecord>> GetAll(List<DateTime> dates);
+        Task<IList<StockPositionRecord>> GetAll(IList<DateTime> dates);
 
         Task<IList<StockPositionRecord>> GetAll(DateTime date);
 

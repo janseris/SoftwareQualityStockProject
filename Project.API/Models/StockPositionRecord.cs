@@ -9,6 +9,7 @@ namespace Project.API.Models
     {
         /// <summary>
         /// Only years, months and days are important and will be used.
+        /// <br>Hours, Minutes, Seconds etc will be trimmed/stripped</br>
         /// </summary>
         public DateTime Date { get; set; }
 
@@ -39,7 +40,7 @@ namespace Project.API.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="date">info other than day, month, year is not relevant</param>
+        /// <param name="date">info other than day, month, year will be removed</param>
         /// <param name="companyName">any non-null string</param>
         /// <param name="ticker">not null and not empty or whitespace</param>
         /// <param name="shares">non-negative</param>
@@ -65,7 +66,7 @@ namespace Project.API.Models
             }
             #endregion
 
-            Date = date;
+            Date = DateTimeHelper.KeepOnlyYearMonthDay(date);
             CompanyName = companyName;
             Ticker = ticker;
             Shares = shares;

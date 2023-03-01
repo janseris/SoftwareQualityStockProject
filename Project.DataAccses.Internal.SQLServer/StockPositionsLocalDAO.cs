@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using Project.API;
 using Project.API.DataAccess;
 using Project.API.Models;
 using Project.DataAccess.Local.SQLServer.Models;
@@ -38,22 +39,26 @@ namespace Project.DataAccess.Local.SQLServer
             return items;
         }
 
-        public async Task<IList<StockPositionRecord>> GetAll(List<DateTime> dates)
+        public async Task<IList<StockPositionRecord>> GetAll(IList<DateTime> dates)
         {
-            var dateonlys = (from date in dates select date.Date).ToList(); //TODO: check if needed to function properly
+            var datesOnly = DateTimeHelper.KeepOnlyYearMonthDay(dates);
 
             using var db = DB;
             var query = CreateGetQuery(db);
-            query = from item in query where dates.Contains(item.Date) select item; //WHERE
+            query = from item in query where datesOnly.Contains(item.Date) select item; //WHERE
             var items = await query.AsNoTracking().ToListAsync(); //SELECT
             return items;
         }
 
         public async Task<IList<StockPositionRecord>> GetAll(DateTime date)
         {
+            var dateOnly = DateTimeHelper.KeepOnlyYearMonthDay(date);
+
             using var db = DB;
             var query = CreateGetQuery(db);
-            query = from item in query where item.Date == date select item; //WHERE
+            query = from item in query 
+                    where item.Date == dateOnly
+                    select item; //WHERE
             var items = await query.AsNoTracking().ToListAsync(); //SELECT
             return items;
         }
@@ -77,11 +82,14 @@ namespace Project.DataAccess.Local.SQLServer
 
         public async Task DeleteForDate(DateTime date)
         {
+            var dateOnly = DateTimeHelper.KeepOnlyYearMonthDay(date);
             using var db = DB;
 
             //EF Core 7 bulk delete could be used without roundtrip maybe
 
-            var query = from item in db.STOCK_POSITION where item.Date == date select item;
+            var query = from item in db.STOCK_POSITION
+                        where item.Date == dateOnly
+                        select item;
             var items = await query.ToListAsync(); //SELECT
             db.RemoveRange(items);
             await db.SaveChangesAsync(); //DELETE

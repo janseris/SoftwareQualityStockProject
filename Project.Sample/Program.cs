@@ -29,7 +29,7 @@ namespace Project.Sample
             Console.WriteLine("Available dates:");
             foreach (var date in availableDates)
             {
-                Console.WriteLine(date.ToString("d. M. yyyy"));
+                Console.WriteLine(date.ToString("d. MMM. yyyy"));
             }
 
             if (availableDates.Count >= 2)

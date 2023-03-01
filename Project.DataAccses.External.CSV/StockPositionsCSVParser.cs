@@ -86,7 +86,7 @@ namespace Project.DataAccess.External.CSV
             //ticker = [3]
             //shares = [5]
             //weight = [7]
-            DateTime date = DateTime.ParseExact(fields[0], "dd/MM/yyyy", null);
+            DateTime date = DateTime.ParseExact(fields[0], "MM/dd/yyyy", null);
             string companyName = fields[2];
             string ticker = fields[3];
             //https://stackoverflow.com/questions/59881624/c-sharp-parse-int-from-different-locale

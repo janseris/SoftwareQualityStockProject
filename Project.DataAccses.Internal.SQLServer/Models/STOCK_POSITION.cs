@@ -9,8 +9,6 @@ public partial class STOCK_POSITION
 {
     public int ID { get; set; }
 
-    public DateTime Date { get; set; }
-
     public string CompanyName { get; set; }
 
     public string Ticker { get; set; }
@@ -18,4 +16,9 @@ public partial class STOCK_POSITION
     public int Shares { get; set; }
 
     public double WeightPercent { get; set; }
+
+    /// <summary>
+    /// Stored with 0 hours, 0 minutes and 0 seconds as a hack
+    /// </summary>
+    public DateTime Date { get; set; }
 }

@@ -22,7 +22,9 @@ public partial class SWQualityProjectContext : DbContext
             entity.Property(e => e.CompanyName)
                 .IsRequired()
                 .HasMaxLength(100);
-            entity.Property(e => e.Date).HasColumnType("date");
+            entity.Property(e => e.Date)
+                .HasComment("Stored with 0 hours, 0 minutes and 0 seconds as a hack")
+                .HasColumnType("date");
             entity.Property(e => e.Ticker)
                 .IsRequired()
                 .HasMaxLength(10);
