@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.UI.Console", "Proje
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.API", "Project.API\Project.API.csproj", "{239D6ABD-A8AF-4023-9F38-1F9EA7C7A24A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.DataAccses.Internal.SQLServer", "Project.DataAccses.Internal.SQLServer\Project.DataAccses.Internal.SQLServer.csproj", "{DAD4DB9E-1D61-4F89-9E4E-F68DE15B4A34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DataAccess.Local.SQLServer", "Project.DataAccses.Internal.SQLServer\Project.DataAccess.Local.SQLServer.csproj", "{DAD4DB9E-1D61-4F89-9E4E-F68DE15B4A34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.DataAccses.External.CSV", "Project.DataAccses.External.CSV\Project.DataAccses.External.CSV.csproj", "{6C84B255-FA06-4BA3-96A2-AD12670C0461}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DataAccess.External.CSV", "Project.DataAccses.External.CSV\Project.DataAccess.External.CSV.csproj", "{6C84B255-FA06-4BA3-96A2-AD12670C0461}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

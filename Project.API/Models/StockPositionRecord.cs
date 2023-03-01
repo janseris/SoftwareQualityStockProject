@@ -31,6 +31,12 @@ namespace Project.API.Models
         public int Shares { get; set; }
 
         /// <summary>
+        /// Informative attribute
+        /// <br>Not negative</br>
+        /// </summary>
+        public double WeightPercent { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="date">info other than day, month, year is not relevant</param>
@@ -38,12 +44,16 @@ namespace Project.API.Models
         /// <param name="ticker">not null and not empty or whitespace</param>
         /// <param name="shares">non-negative</param>
         /// <exception cref="ArgumentException"></exception>
-        public StockPositionRecord(DateTime date, string companyName, string ticker, int shares)
+        public StockPositionRecord(DateTime date, string companyName, string ticker, int shares, double weightPercent)
         {
             #region validity checks
-            if (shares <= 0)
+            if (shares < 0)
             {
                 throw new ArgumentException($"{nameof(shares)} cannot be negative.");
+            }
+            if(weightPercent < 0)
+            {
+                throw new ArgumentException($"{nameof(weightPercent)} cannot be negative.");
             }
             if (companyName is null)
             {
@@ -59,6 +69,7 @@ namespace Project.API.Models
             CompanyName = companyName;
             Ticker = ticker;
             Shares = shares;
+            WeightPercent = weightPercent;
         }
     }
 }

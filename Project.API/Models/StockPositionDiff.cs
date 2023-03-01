@@ -1,5 +1,8 @@
 ﻿namespace Project.API.Models
 {
+    /// <summary>
+    /// The result to be displayed as info to the user
+    /// </summary>
     public class StockPositionDiff
     {
         public string CompanyName { get; set; }
@@ -13,5 +16,9 @@
         /// <c>null => new company</c>
         /// </summary>
         public double? SharesDiffPercent { get; set; }
+
+        public int Shares { get; set; }
+
+        public double WeightPercent { get; set; }
     }
 }

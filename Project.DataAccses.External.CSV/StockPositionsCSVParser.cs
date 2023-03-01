@@ -68,13 +68,17 @@ namespace Project.DataAccses.External.CSV
             //date = [0]
             //company name = [2]
             //ticker = [3]
-            //shares = [4]
+            //shares = [5]
+            //weight = [7]
             DateTime date = DateTime.ParseExact(fields[0], "dd/MM/yyyy", null);
             string companyName = fields[2];
             string ticker = fields[3];
             //https://stackoverflow.com/questions/59881624/c-sharp-parse-int-from-different-locale
-            int shares = int.Parse(fields[4], NumberStyles.Integer | NumberStyles.AllowThousands, CultureInfo.InvariantCulture /* ',' thousands separator */);
-            return new StockPositionRecord(date, companyName, ticker, shares);
+            int shares = int.Parse(fields[5], NumberStyles.Integer | NumberStyles.AllowThousands, CultureInfo.InvariantCulture /* ',' thousands separator */);
+
+            string weightWithoutPercentSign = fields[7].Replace("%", string.Empty);
+            double weightPercent = double.Parse(weightWithoutPercentSign, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture /* TODO: check if allows dot as decimal separator */);
+            return new StockPositionRecord(date, companyName, ticker, shares, weightPercent);
         }
 
         /// <summary>

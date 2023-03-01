@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Project.API.Models;
 
@@ -10,13 +11,18 @@ namespace Project.API.DataAccess
     /// </summary>
     public interface IStockPositionsLocalDAO
     {
-        IList<StockPositionRecord> GetAll();
+        Task<IList<StockPositionRecord>> GetAll();
 
-        IList<StockPositionRecord> GetAll(List<DateTime> dates);
+        Task<IList<StockPositionRecord>> GetAll(List<DateTime> dates);
 
-        IList<StockPositionRecord> GetAll(DateTime date);
+        Task<IList<StockPositionRecord>> GetAll(DateTime date);
 
-        bool AnyRecordsExist(DateTime date);
+        Task<bool> AnyRecordsExist(DateTime date);
+
+        /// <summary>
+        /// Returns distinct date values which are present in the data source -> a list of dates which we can use for diffs.
+        /// </summary>
+        Task<IList<DateTime>> GetAvailableDates();
 
         /// <summary>
         /// Adds <paramref name="records"/> to persistent storage.
@@ -27,6 +33,6 @@ namespace Project.API.DataAccess
         /// </list>
         /// </summary>
         /// <param name="records"></param>
-        void InsertAll(IList<StockPositionRecord> records);
+        Task InsertAll(IList<StockPositionRecord> records);
     }
 }
