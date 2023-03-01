@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using Project.API.DataAccess;
 using Project.API.Facades;
@@ -16,6 +17,8 @@ namespace Project.Sample
 {
     public class DISetup
     {
+        private const string DefaultFirefoxUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0";
+
         public static IServiceProvider GetServiceProvider()
         {
             //https://rogerpence.dev/add-appsettings-json-file-to-a-c-console-app/
@@ -45,6 +48,7 @@ namespace Project.Sample
             services.AddHttpClient<IStockPositionsCSVDAO, OnlineStockPositionsCSVDAO>(httpClient =>
             {
                 httpClient.BaseAddress = new Uri(csvURL);
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(DefaultFirefoxUserAgent);
             });
 
             services.AddSingleton<IStockPositionsCSVParser, StockPositionsCSVParser>();
@@ -56,7 +60,20 @@ namespace Project.Sample
             services.AddSingleton<IStockPositionDiffService, StockPositionDiffService>();
             services.AddSingleton<IStockPositionsDiffFacade, StockPositionsDiffFacade>();
 
-            return services.BuildServiceProvider();
-        }
-    }
-}
+
+            //logging
+            //source: https://thecodeblogger.com/2021/05/11/how-to-enable-logging-in-net-console-applications/
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddFilter("Microsoft", LogLevel.Warning)
+                    .AddFilter("System", LogLevel.Warning)
+                    .AddFilter("Project.Sample", LogLevel.Debug)
+                    .AddConsole();
+            });
+            services.AddSingleton(loggerFactory.CreateLogger<StockPositionsCSVParser>());
+                                  
+            return services.BuildServiceProvider(); 
+        } 
+    } 
+}           

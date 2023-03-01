@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic.FileIO;
 
 using Project.API.Models;
@@ -9,6 +10,13 @@ namespace Project.DataAccess.External.CSV
 {
     public class StockPositionsCSVParser : IStockPositionsCSVParser
     {
+        private readonly ILogger<StockPositionsCSVParser> logger;
+
+        public StockPositionsCSVParser(ILogger<StockPositionsCSVParser> logger)
+        {
+            this.logger = logger;
+        }
+
         public IList<StockPositionRecord> Parse(byte[] csv)
         {
             var lines = GetTextLines(csv);
@@ -16,8 +24,16 @@ namespace Project.DataAccess.External.CSV
             var items = new List<StockPositionRecord>();
             foreach (var line in lines)
             {
-                var item = Parse(line);
-                items.Add(item);
+                try
+                {
+                    var item = Parse(line);
+                    items.Add(item);
+                }
+                catch (Exception ex)
+                {
+                    //e.g. DREYFUS GOVT CASH MAN INS has no ticker
+                    logger.LogInformation($"Object representation for line '{line}' could not be created when parsing because of malformed input. The line will be skipped. Details: {ex.Message}");
+                }
             }
             return items;
         }
@@ -77,8 +93,10 @@ namespace Project.DataAccess.External.CSV
             int shares = int.Parse(fields[5], NumberStyles.Integer | NumberStyles.AllowThousands, CultureInfo.InvariantCulture /* ',' thousands separator */);
 
             string weightWithoutPercentSign = fields[7].Replace("%", string.Empty);
-            double weightPercent = double.Parse(weightWithoutPercentSign, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture /* TODO: check if allows dot as decimal separator */);
-            return new StockPositionRecord(date, companyName, ticker, shares, weightPercent);
+            double weightPercent = double.Parse(weightWithoutPercentSign, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture /* TODO: check if InvariantCulture allows dot as decimal separator */);
+
+            var result = new StockPositionRecord(date, companyName, ticker, shares, weightPercent);
+            return result;
         }
 
         /// <summary>
