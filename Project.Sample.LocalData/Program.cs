@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 using Project.API.DataAccess;
 using Project.API.Services;
+using Project.DataAccess.Local.SQLServer.Models;
 using Project.Logic.Facades;
 using Project.Logic.Services;
 
@@ -14,6 +16,9 @@ namespace Project.Sample.LocalData
             var provider = DISetup.GetServiceProvider();
             var service = provider.GetRequiredService<ITodaysStockPositionsLoadingService>() as TodaysStockPositionsLoadingService;
 
+
+            await CreateDatabase(provider);
+
             string sampleDataFolderPath = "../../../../sampleData";
 
             await ImportDataToDB(provider, new DateTime(2023, 2, 28), "28feb2023 - ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv", sampleDataFolderPath);
@@ -22,6 +27,14 @@ namespace Project.Sample.LocalData
             Console.WriteLine();
 
             Console.ReadKey(); //do not exit immediately
+        }
+
+        //works but access denied for such database from SSMS idk how to fix
+        private static async Task CreateDatabase(IServiceProvider provider)
+        {
+            var dbContextFactory = provider.GetRequiredService<IDbContextFactory<SWQualityProjectContext>>();
+            using var dbContext = dbContextFactory.CreateDbContext();
+            await dbContext.Database.EnsureCreatedAsync(); //create if does not exist
         }
 
         private static async Task<bool> ImportDataToDB(IServiceProvider provider, DateTime date, string csvFileName, string sampleDataFolderPath, bool overwriteIfExists = false)
