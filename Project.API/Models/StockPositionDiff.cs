@@ -32,7 +32,7 @@
             {
                 return string.Empty;
             }
-            return $"({SharesDiffPercent.Value.ToString("+#;-#;0")} %)";
+            return $"({SharesDiffPercent.Value.ToString("+#.##;-#.##;0")} %)";
         }
     }
 }

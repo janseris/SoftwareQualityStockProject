@@ -29,16 +29,19 @@ namespace Project.Sample
 
 
             var availableDates = await facade.GetAvailableDates();
-            Console.WriteLine("Available dates:");
+            Console.WriteLine("Available dates in DB:");
             foreach (var date in availableDates)
             {
                 Console.WriteLine(date.ToString("d. MMM. yyyy"));
             }
+            Console.WriteLine();
 
             if (availableDates.Count >= 2)
             {
                 var firstDate = availableDates[0];
                 var secondDate = availableDates[1];
+
+                Console.WriteLine($"Comparning dates {firstDate.ToString("d. MMM. yyyy")} and {secondDate.ToString("d. MMM. yyyy")}");
                 var diff = await diffFacade.GetDiff(firstDate, secondDate);
                 PrintDiff(diff);
             }
@@ -52,8 +55,31 @@ namespace Project.Sample
             {
                 Console.WriteLine(position);
             }
-            var changedPositions = (from item in stockPositionDiffs where item.SharesDiffPercent is not null select item).ToList();
-            foreach (var position in changedPositions)
+            
+            Console.WriteLine();
+
+            var changedPositions = (from item in stockPositionDiffs 
+                                    where item.SharesDiffPercent is not null 
+                                    select item).ToList();
+
+            var increasedPositions = (from item in changedPositions
+                                    where item.SharesDiffPercent!.Value >= 0
+                                    select item).ToList();
+
+            var decreasedPositions = (from item in changedPositions
+                                      where item.SharesDiffPercent!.Value < 0
+                                      select item).ToList();
+
+            Console.WriteLine("Increased positions:");
+            foreach (var position in increasedPositions)
+            {
+                Console.WriteLine(position);
+            }
+
+            Console.WriteLine();
+
+            Console.WriteLine("Decreased positions:");
+            foreach (var position in decreasedPositions)
             {
                 Console.WriteLine(position);
             }
