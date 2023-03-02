@@ -35,7 +35,7 @@ namespace Project.Logic.Facades
 
         private async Task ThrowIfNoRecords(DateTime date)
         {
-            if (await dao.AnyRecordsExist(date))
+            if (await dao.AnyRecordsExist(date) == false)
             {
                 throw new ArgumentException($"No data for date {date}");
             }

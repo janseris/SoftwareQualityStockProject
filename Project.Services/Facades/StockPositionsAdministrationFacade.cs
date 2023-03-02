@@ -21,6 +21,11 @@ namespace Project.Logic.Facades
             return await localDAO.AnyRecordsExist(DateTime.Now);
         }
 
+        public async Task<bool> AreStockPositionsAlreadySaved(DateTime date)
+        {
+            return await localDAO.AnyRecordsExist(date);
+        }
+
         public async Task<IList<StockPositionRecord>> GetAll(DateTime date)
         {
             return await localDAO.GetAll(date);
@@ -34,12 +39,14 @@ namespace Project.Logic.Facades
         public async Task<bool> SaveTodaysStockPositions(bool overwrite)
         {
             var data = await sourceDAO.GetTodaysRecords();
-            var existsForToday = await localDAO.AnyRecordsExist(DateTime.Now);
+
+            var dateToCheck = data.First().Date; //assumes there is always at least 1 record received in the data
+            var existsForToday = await localDAO.AnyRecordsExist(dateToCheck);
 
             if(existsForToday && overwrite)
             {
                 //TODO: transaction
-                await localDAO.DeleteForDate(DateTime.Now);
+                await localDAO.DeleteForDate(dateToCheck);
                 await localDAO.InsertAll(data);
                 return true;
             }

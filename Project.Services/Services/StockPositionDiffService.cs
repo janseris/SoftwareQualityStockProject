@@ -36,7 +36,9 @@ namespace Project.Logic.Services
 
         private bool ContainsDuplicatesByTicker(IList<StockPositionRecord> items)
         {
-            return items.DistinctBy(item => item.Ticker).Count() != items.Count;
+            var distinctTickersCount = items.DistinctBy(item => item.Ticker).Count();
+            bool containsDuplicates = distinctTickersCount != items.Count;
+            return containsDuplicates;
         }
 
         public IList<StockPositionDiff> GetDiff(IList<StockPositionRecord> positions1, IList<StockPositionRecord> positions2)
@@ -97,9 +99,6 @@ namespace Project.Logic.Services
             }
             return result;
         }
-
-
-
 
         private void Validate(IList<StockPositionRecord> items1, IList<StockPositionRecord> items2)
         {

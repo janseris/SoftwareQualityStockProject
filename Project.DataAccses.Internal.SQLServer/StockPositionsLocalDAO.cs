@@ -24,21 +24,20 @@ namespace Project.DataAccess.Local.SQLServer
             var dateOnly = DateTimeHelper.KeepOnlyYearMonthDay(date);
 
             using var db = DB;
-            var query = from item in db.STOCK_POSITION where item.Date == date select 1;
-            return await query.AnyAsync(); //SELECT
+            var query =
+                from item in db.STOCK_POSITION
+                where item.Date == date
+                select 1;
+            return await query.AnyAsync();
         }
 
-        private IQueryable<StockPositionRecord> CreateGetQuery(SWQualityProjectContext db)
-        {
-            return from item in db.STOCK_POSITION
-                   select new StockPositionRecord(item.Date, item.CompanyName, item.Ticker, item.Shares, item.WeightPercent);
-        }
 
         public async Task<IList<StockPositionRecord>> GetAll()
         {
             using var db = DB;
-            var query = CreateGetQuery(db);
-            var items = await query.AsNoTracking().ToListAsync(); //SELECT
+            var query = from item in db.STOCK_POSITION
+                        select new StockPositionRecord(item.Date, item.CompanyName, item.Ticker, item.Shares, item.WeightPercent);
+            var items = await query.AsNoTracking().ToListAsync();
             return items;
         }
 
@@ -47,9 +46,10 @@ namespace Project.DataAccess.Local.SQLServer
             var datesOnly = DateTimeHelper.KeepOnlyYearMonthDay(dates);
 
             using var db = DB;
-            var query = CreateGetQuery(db);
-            query = from item in query where datesOnly.Contains(item.Date) select item; //WHERE
-            var items = await query.AsNoTracking().ToListAsync(); //SELECT
+            var query = from item in db.STOCK_POSITION
+                        where datesOnly.Contains(item.Date)
+                        select new StockPositionRecord(item.Date, item.CompanyName, item.Ticker, item.Shares, item.WeightPercent);
+            var items = await query.AsNoTracking().ToListAsync();
             return items;
         }
 
@@ -58,11 +58,10 @@ namespace Project.DataAccess.Local.SQLServer
             var dateOnly = DateTimeHelper.KeepOnlyYearMonthDay(date);
 
             using var db = DB;
-            var query = CreateGetQuery(db);
-            query = from item in query 
-                    where item.Date == dateOnly
-                    select item; //WHERE
-            var items = await query.AsNoTracking().ToListAsync(); //SELECT
+            var query = from item in db.STOCK_POSITION
+                        where item.Date == dateOnly
+                        select new StockPositionRecord(item.Date, item.CompanyName, item.Ticker, item.Shares, item.WeightPercent);
+            var items = await query.AsNoTracking().ToListAsync();
             return items;
         }
 
@@ -75,12 +74,18 @@ namespace Project.DataAccess.Local.SQLServer
             return items;
         }
 
+        /// <summary>
+        /// Does not check if records for current day already exist
+        /// </summary>
         public async Task InsertAll(IList<StockPositionRecord> records)
         {
-            var items = (from record in records select insertMapper.Map(record)).ToList();
+            var items = (
+                from record in records
+                select insertMapper.Map(record)
+                ).ToList();
             using var db = DB;
             db.AddRange(items);
-            await db.SaveChangesAsync(); //INSERT
+            await db.SaveChangesAsync();
         }
 
         public async Task DeleteForDate(DateTime date)
@@ -93,9 +98,9 @@ namespace Project.DataAccess.Local.SQLServer
             var query = from item in db.STOCK_POSITION
                         where item.Date == dateOnly
                         select item;
-            var items = await query.ToListAsync(); //SELECT
+            var items = await query.ToListAsync();
             db.RemoveRange(items);
-            await db.SaveChangesAsync(); //DELETE
+            await db.SaveChangesAsync();
         }
     }
 }

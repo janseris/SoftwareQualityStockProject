@@ -14,14 +14,19 @@ namespace Project.Sample
             var facade = provider.GetRequiredService<IStockPositionsAdministrationFacade>();
             var diffFacade = provider.GetRequiredService<IStockPositionsDiffFacade>();
 
-            bool todaySaved = await facade.AreTodaysStockPositionsAlreadySaved();
 
-            var verb = todaySaved ? "are" : "aren't";
-            Console.WriteLine($"Todays data {verb} already saved in the DB.");
 
-            var conditionalOverwriteText = todaySaved ? " (overwriting)" : "";
-            Console.WriteLine($"Retrieving and saving today's data{conditionalOverwriteText}.");
-            await facade.SaveTodaysStockPositions(overwrite: true);
+            ////doesnt work well if date in csv does not match local date because of timezone
+            //bool todaySaved = await facade.AreTodaysStockPositionsAlreadySaved();
+
+            //var verb = todaySaved ? "are" : "aren't";
+            //Console.WriteLine($"Todays data {verb} already saved in the DB.");
+
+            //var conditionalOverwriteText = todaySaved ? " (overwriting)" : "";
+            //Console.WriteLine($"Retrieving and saving today's data{conditionalOverwriteText}.");
+            //await facade.SaveTodaysStockPositions(overwrite: true);
+
+
 
             var availableDates = await facade.GetAvailableDates();
             Console.WriteLine("Available dates:");

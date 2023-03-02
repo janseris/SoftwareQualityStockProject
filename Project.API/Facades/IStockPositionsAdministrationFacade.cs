@@ -19,9 +19,15 @@ namespace Project.API.Facades
         Task<bool> SaveTodaysStockPositions(bool overwrite);
 
         /// <summary>
-        /// Checks whether the info has been scraped from the web and is saved in the persistent local storage.
+        /// Checks whether the info has been scraped for today from the web and is saved in the persistent local storage.
+        /// <br>Warning: "today" on local machine might differ (+1/-1) from the date in the received data from the remote server</br>
         /// </summary>
         Task<bool> AreTodaysStockPositionsAlreadySaved();
+
+        /// <summary>
+        /// Checks whether the info has been scraped for <see cref="date"/> from the web and is saved in the persistent local storage.
+        /// </summary>
+        Task<bool> AreStockPositionsAlreadySaved(DateTime date);
 
         /// <summary>
         /// Returns a list of dates which can be used for diffs (there are some records stored in the persistent local storage for them)
