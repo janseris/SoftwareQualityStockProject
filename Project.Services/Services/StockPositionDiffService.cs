@@ -30,7 +30,8 @@ namespace Project.Logic.Services
         private double GetSharesDiffPercent(int oldShares, int newShares)
         {
             int sharesDiff = newShares - oldShares;
-            double sharesDiffPercent = sharesDiff / 100d;
+            var ratio = (sharesDiff / (double)newShares);
+            double sharesDiffPercent = ratio * 100d;
             return sharesDiffPercent;
         }
 

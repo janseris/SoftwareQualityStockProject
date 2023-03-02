@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DataAccess.External
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Logic", "Project.Services\Project.Logic.csproj", "{47FC574D-75DC-4391-B02A-536F653760AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.WinForms", "Project.WinForms\Project.WinForms.csproj", "{21681D69-1F73-4A46-896C-84CC42B30B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.WinForms", "Project.WinForms\Project.WinForms.csproj", "{21681D69-1F73-4A46-896C-84CC42B30B40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Sample.LocalData", "Project.Sample.LocalData\Project.Sample.LocalData.csproj", "{1A72270F-217C-4F68-AFDA-7CD417E2BE3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Sample.LocalDataImport", "Project.Sample.LocalData\Project.Sample.LocalDataImport.csproj", "{1A72270F-217C-4F68-AFDA-7CD417E2BE3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
